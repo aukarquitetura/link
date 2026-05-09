@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="AUK.arq — Arquitetura de Interiores e Gestão de Obras. São Paulo.">
+<title>auk.arq · link</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:   #000000;
+    --white:   #FFFFFF;
+    --grafite: #222222;
+    --stone:   #888888;
+    --off:     #F4F2EE;
+    --border:  #1C1C1C;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Archivo', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .page {
+    position: relative; z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 0 64px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 48px 24px 0;
+    text-align: center;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .logo-wrap {
+    display: inline-block;
+    background: var(--white);
+    padding: 14px 18px 10px;
+    margin-bottom: 20px;
+  }
+
+  .logo-text {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--black);
+    text-transform: lowercase;
+    letter-spacing: -0.5px;
+    display: block;
+  }
+
+  .logo-text .dot { color: var(--stone); }
+
+  .handle {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 10px;
+  }
+
+  .bio-name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    color: var(--white);
+    text-transform: lowercase;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+
+  .bio-line {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--stone);
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+
+  .bio-tagline {
+    font-size: 12px;
+    font-style: italic;
+    color: #555;
+    margin-top: 6px;
+    margin-bottom: 24px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 0 0 28px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .sec-label {
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #333;
+    padding: 0 24px;
+    margin-bottom: 12px;
+  }
+
+  /* ── LINKS ── */
+  .links {
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--grafite);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--white);
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .link-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--white);
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+    transform-origin: bottom;
+  }
+
+  .link-item:hover {
+    background: #2A2A2A;
+    border-color: #333;
+    transform: translateX(2px);
+  }
+
+  .link-item:hover::before { transform: scaleY(1); }
+
+  .link-item.primary {
+    background: var(--white);
+    border-color: var(--white);
+  }
+  .link-item.primary::before { background: var(--black); }
+  .link-item.primary .link-title { color: var(--black); }
+  .link-item.primary .link-sub { color: var(--stone); }
+  .link-item.primary .link-arrow { color: var(--black); }
+  .link-item.primary:hover { background: var(--off); }
+
+  .link-left { display: flex; align-items: center; gap: 14px; }
+  .link-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+  .link-copy { display: flex; flex-direction: column; gap: 2px; }
+  .link-title { font-size: 13px; font-weight: 500; color: var(--white); }
+  .link-sub { font-size: 11px; font-weight: 300; color: var(--stone); }
+  .link-arrow { font-size: 14px; color: #444; }
+
+  /* ── STATS BAR ── */
+  .stats {
+    padding: 0 24px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .stat-item {
+    background: var(--grafite);
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: -0.5px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* ── DIFERENCIAIS ── */
+  .diferencias {
+    padding: 0 24px;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .dif-item {
+    background: var(--black);
+    padding: 16px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .dif-letter {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    color: var(--stone);
+    flex-shrink: 0;
+    width: 20px;
+  }
+
+  .dif-copy {}
+  .dif-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 3px;
+    letter-spacing: 0.04em;
+  }
+  .dif-desc {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--stone);
+    line-height: 1.55;
+  }
+
+  /* ── CONTATO ── */
+  .contato {
+    padding: 0 24px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s 0.35s ease both;
+  }
+
+  .contato-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .contato-item {
+    background: var(--grafite);
+    padding: 14px 16px;
+  }
+
+  .contato-label {
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 5px;
+  }
+
+  .contato-val {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--white);
+  }
+
+  /* ── DEPOIMENTO ── */
+  .depo {
+    padding: 0 24px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .depo-card {
+    background: var(--grafite);
+    border: 1px solid var(--border);
+    padding: 22px 20px;
+    position: relative;
+  }
+
+  .depo-quote {
+    font-size: 28px;
+    color: var(--stone);
+    line-height: 1;
+    margin-bottom: 10px;
+    font-family: 'Archivo Black', sans-serif;
+  }
+
+  .depo-text {
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: #AAA;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .depo-author {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 0 24px;
+    text-align: center;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+
+  .footer-logo {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 13px;
+    text-transform: lowercase;
+    color: #333;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+
+  .footer-text {
+    font-size: 10px;
+    font-weight: 300;
+    color: #333;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .link-item:nth-child(1) { animation-delay: 0.05s; }
+  .link-item:nth-child(2) { animation-delay: 0.10s; }
+  .link-item:nth-child(3) { animation-delay: 0.15s; }
+  .link-item:nth-child(4) { animation-delay: 0.20s; }
+  .link-item:nth-child(5) { animation-delay: 0.25s; }
+
+  /* ── MOBILE TOUCH ── */
+  @media (hover: none) {
+    .link-item:hover { transform: none; }
+  }
+
+  /* ── SCROLL TO TOP ── */
+  .back-top {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 40px; height: 40px;
+    background: var(--white);
+    color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 100;
+    font-family: 'Archivo Black', sans-serif;
+  }
+
+  .back-top.visible { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-wrap">
+      <span class="logo-text">auk<br><span class="dot">.</span>arq</span>
+    </div>
+    <p class="handle">@auk.arq</p>
+    <h1 class="bio-name">auk arquitetura</h1>
+    <p class="bio-line">Arquitetura de interiores · Gestão de obras</p>
+    <p class="bio-line">Alto padrão · São Paulo</p>
+    <p class="bio-tagline">Do traço à entrega. Um único eixo.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- LINKS PRINCIPAIS -->
+  <p class="sec-label">acesso rápido</p>
+  <div class="links">
+
+    <a class="link-item primary" href="#orcamento">
+      <div class="link-left">
+        <span class="link-icon">→</span>
+        <div class="link-copy">
+          <span class="link-title">Solicitar proposta</span>
+          <span class="link-sub">Fale com a AUK sobre seu projeto</span>
+        </div>
+      </div>
+      <span class="link-arrow">↗</span>
+    </a>
+
+    <a class="link-item" href="#portfolio">
+      <div class="link-left">
+        <span class="link-icon">◻</span>
+        <div class="link-copy">
+          <span class="link-title">Portfólio de obras</span>
+          <span class="link-sub">Projetos residenciais e comerciais entregues</span>
+        </div>
+      </div>
+      <span class="link-arrow">↗</span>
+    </a>
+
+    <a class="link-item" href="#pacotes">
+      <div class="link-left">
+        <span class="link-icon">≡</span>
+        <div class="link-copy">
+          <span class="link-title">Nossos pacotes</span>
+          <span class="link-sub">Basic · Intermediário · Premium</span>
+        </div>
+      </div>
+      <span class="link-arrow">↗</span>
+    </a>
+
+    <a class="link-item" href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20vim%20pelo%20Instagram%20da%20AUK%20e%20gostaria%20de%20conversar%20sobre%20meu%20projeto." target="_blank" rel="noopener">
+      <div class="link-left">
+        <span class="link-icon">✉</span>
+        <div class="link-copy">
+          <span class="link-title">WhatsApp</span>
+          <span class="link-sub">Resposta em até 24h úteis</span>
+        </div>
+      </div>
+      <span class="link-arrow">↗</span>
+    </a>
+
+    <a class="link-item" href="#sobre">
+      <div class="link-left">
+        <span class="link-icon">◯</span>
+        <div class="link-copy">
+          <span class="link-title">Quem somos</span>
+          <span class="link-sub">Marta Navarro · Vanessa Gasparini</span>
+        </div>
+      </div>
+      <span class="link-arrow">↗</span>
+    </a>
+
+  </div>
+
+  <!-- STATS -->
+  <p class="sec-label">números que importam</p>
+  <div class="stats">
+    <div class="stat-item">
+      <span class="stat-num">+100</span>
+      <span class="stat-label">Obras entregues</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">21</span>
+      <span class="stat-label">Anos de experiência</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">360°</span>
+      <span class="stat-label">Gestão integrada</span>
+    </div>
+  </div>
+
+  <!-- O QUE NOS DIFERENCIA -->
+  <p class="sec-label">o que nos diferencia</p>
+  <div class="diferencias">
+    <div class="dif-item">
+      <span class="dif-letter">A</span>
+      <div class="dif-copy">
+        <div class="dif-title">Áurea · Proporção antes de estética</div>
+        <div class="dif-desc">Cada ambiente é desenhado a partir de proporções que funcionam, não de tendências que expiram.</div>
+      </div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-letter">U</span>
+      <div class="dif-copy">
+        <div class="dif-title">União · Um único interlocutor</div>
+        <div class="dif-desc">Projeto e obra sob uma única gestão. Do primeiro traço à entrega das chaves. Zero ruído.</div>
+      </div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-letter">K</span>
+      <div class="dif-copy">
+        <div class="dif-title">Kairós · O tempo certo</div>
+        <div class="dif-desc">21 anos de obras ensinam quando avançar, quando esperar e quando mudar. Entrega sem surpresas.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEPOIMENTO -->
+  <p class="sec-label">o que dizem</p>
+  <div class="depo">
+    <div class="depo-card">
+      <div class="depo-quote">"</div>
+      <p class="depo-text">Projeto e obra não precisam ser sinônimo de dor de cabeça. Com a AUK, cada etapa foi clara, o prazo foi cumprido e o resultado superou o que eu imaginava.</p>
+      <p class="depo-author">Cliente · Projeto Residencial · São Paulo</p>
+    </div>
+  </div>
+
+  <!-- CONTATO -->
+  <p class="sec-label">contato</p>
+  <div class="contato">
+    <div class="contato-grid">
+      <div class="contato-item">
+        <p class="contato-label">Instagram</p>
+        <p class="contato-val">@auk.arq</p>
+      </div>
+      <div class="contato-item">
+        <p class="contato-label">E-mail</p>
+        <p class="contato-val">contato@auk.arq</p>
+      </div>
+      <div class="contato-item">
+        <p class="contato-label">WhatsApp</p>
+        <p class="contato-val">+55 11 [número]</p>
+      </div>
+      <div class="contato-item">
+        <p class="contato-label">Cidade</p>
+        <p class="contato-val">São Paulo · SP</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACOTES (âncora) -->
+  <div id="pacotes" style="padding: 0 24px; margin-bottom: 32px; scroll-margin-top: 24px;">
+    <p class="sec-label" style="padding: 0; margin-bottom: 12px;">pacotes</p>
+    <div style="display: flex; flex-direction: column; gap: 1px; background: var(--border);">
+
+      <div style="background: var(--grafite); padding: 18px 18px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 8px;">
+          <div>
+            <p style="font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone);margin-bottom:4px;">BASIC</p>
+            <p style="font-size:13px;font-weight:500;color:var(--white);">Consultoria</p>
+          </div>
+          <p style="font-family:'Archivo Black',sans-serif;font-size:16px;color:var(--white);">R$ 10.000</p>
+        </div>
+        <p style="font-size:11px;font-weight:300;color:var(--stone);line-height:1.6;">Levantamento · Briefing · Estudo Preliminar com imagens realísticas</p>
+      </div>
+
+      <div style="background: var(--white); padding: 18px 18px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 8px;">
+          <div>
+            <p style="font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone);margin-bottom:4px;">INTERMEDIÁRIO · MAIS ESCOLHIDO</p>
+            <p style="font-size:13px;font-weight:500;color:var(--black);">Projeto Arquitetônico</p>
+          </div>
+          <p style="font-family:'Archivo Black',sans-serif;font-size:16px;color:var(--black);">R$ 15.000</p>
+        </div>
+        <p style="font-size:11px;font-weight:300;color:#666;line-height:1.6;">Projeto completo + Estudo de Viabilidade Financeira + Projeto Executivo</p>
+      </div>
+
+      <div style="background: var(--grafite); padding: 18px 18px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 8px;">
+          <div>
+            <p style="font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone);margin-bottom:4px;">PREMIUM</p>
+            <p style="font-size:13px;font-weight:500;color:var(--white);">Projeto e Gestão de Obra</p>
+          </div>
+          <p style="font-family:'Archivo Black',sans-serif;font-size:16px;color:var(--white);">R$ 22.000</p>
+        </div>
+        <p style="font-size:11px;font-weight:300;color:var(--stone);line-height:1.6;">Solução 360°: do traço à entrega. Projeto, compatibilização e gestão completa.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SOLICITAR ORÇAMENTO (âncora) -->
+  <div id="orcamento" style="padding: 0 24px; margin-bottom: 32px; scroll-margin-top: 24px;">
+    <p class="sec-label" style="padding: 0; margin-bottom: 12px;">solicitar proposta</p>
+    <div style="background: var(--grafite); border: 1px solid var(--border); padding: 24px 20px;">
+      <p style="font-family:'Archivo Black',sans-serif;font-size:18px;color:var(--white);margin-bottom:8px;text-transform:lowercase;letter-spacing:-0.3px;">vamos conversar sobre seu projeto?</p>
+      <p style="font-size:12px;font-weight:300;color:var(--stone);line-height:1.7;margin-bottom:20px;">Antes da primeira reunião, não cobramos nada. Você nos conta sobre o espaço e o que imagina — a AUK avalia e apresenta as possibilidades.</p>
+      <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20vim%20pelo%20Instagram%20da%20AUK.%20Gostaria%20de%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener"
+        style="display:block;background:var(--white);color:var(--black);text-align:center;padding:14px 20px;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:background 0.15s;">
+        Chamar no WhatsApp →
+      </a>
+    </div>
+  </div>
+
+  <!-- SOBRE (âncora) -->
+  <div id="sobre" style="padding: 0 24px; margin-bottom: 40px; scroll-margin-top: 24px;">
+    <p class="sec-label" style="padding: 0; margin-bottom: 12px;">quem somos</p>
+    <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
+
+      <div style="background:var(--grafite);padding:20px 18px;">
+        <p style="font-size:9px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);margin-bottom:6px;">CLIENTES · OBRAS</p>
+        <p style="font-size:14px;font-weight:500;color:var(--white);margin-bottom:8px;">Marta Navarro</p>
+        <p style="font-size:11px;font-weight:300;color:var(--stone);line-height:1.65;">Arquiteta com 21 anos de experiência em obras residenciais e comerciais de alto padrão. +100 obras entregues em SP. Gestão, rigor técnico e foco total na experiência do cliente.</p>
+      </div>
+
+      <div style="background:var(--grafite);padding:20px 18px;">
+        <p style="font-size:9px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);margin-bottom:6px;">PROJETOS · ADMINISTRATIVO</p>
+        <p style="font-size:14px;font-weight:500;color:var(--white);margin-bottom:8px;">Vanessa Gasparini</p>
+        <p style="font-size:11px;font-weight:300;color:var(--stone);line-height:1.65;">Arquiteta especializada em interiores de alto padrão. Responsável pelo desenvolvimento criativo dos projetos, especificação de materiais e coordenação administrativa do escritório.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p class="footer-logo">auk.arq</p>
+    <p class="footer-text">São Paulo · 2026</p>
+  </div>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+  // Show back-to-top after scroll
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('backTop');
+    if (window.scrollY > 300) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  });
+
+  // Smooth anchor with offset
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // WhatsApp hover fill
+  document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+    a.addEventListener('mouseenter', () => a.style.background = '#F4F2EE');
+    a.addEventListener('mouseleave', () => a.style.background = '');
+  });
+</script>
+
+</body>
+</html>
